@@ -6,7 +6,7 @@ import Contactos from "./pages/Contacto";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/TP2_LENGUAJES_IV">
       <Navbar />
       <Routes>
         <Route path="/" element={<Inicio />} />
