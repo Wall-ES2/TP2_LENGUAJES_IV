@@ -1,10 +1,15 @@
+import ContactForm from "../components/ContactForm";
+
 const Contacto = () => {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-zinc-900 px-4">
-      <h1 className="text-5xl font-bold text-purple-500 mb-6">Contacto</h1>
-      <p className="text-xl text-zinc-300">
-        Ponte en contacto para nuevos proyectos.
-      </p>
+    <main className="min-h-screen flex flex-col items-center justify-center bg-zinc-900 px-4 pt-20">
+      <h1 className="text-4xl font-bold text-purple-500 mb-8">Contacto</h1>
+
+      {/* 
+        Instanciamos el componente hijo y le pasamos una prop. 
+        Esto se usa para compartir información entre componentes. 
+      */}
+      <ContactForm buttonText="Enviar Mensaje" />
     </main>
   );
 };
