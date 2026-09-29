@@ -1,8 +1,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 
-// Recibimos "buttonText" como prop para hacer el componente reutilizable
-const ContactForm = ({ buttonText }) => {
+const ContactForm = ({ buttonText = "Enviar mensaje" }) => {
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -10,18 +9,15 @@ const ContactForm = ({ buttonText }) => {
   });
 
   const [errores, setErrores] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("");
 
-  // Por convención, los manejadores de eventos se nombran con el prefijo handle seguido del nombre del evento.
   const handleChange = (event) => {
-    // Para capturar lo que el usuario escribe, usamos event.target, que es el elemento del DOM que disparó el evento.
     const { name, value } = event.target;
 
-    if (name === "mensaje" && value.length > 300) return;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((currentData) => ({ ...currentData, [name]: value }));
+    setErrores((currentErrors) => ({ ...currentErrors, [name]: "" }));
+    setStatus("");
   };
 
   const validarFormulario = () => {
@@ -41,102 +37,151 @@ const ContactForm = ({ buttonText }) => {
     return nuevosErrores;
   };
 
-  const handleSubmit = (event) => {
-    // Implementamos event.preventDefault(), que es una función para prevenir el comportamiento por defecto del navegador.
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    if (isSubmitting) return;
 
     const erroresDetectados = validarFormulario();
 
     if (Object.keys(erroresDetectados).length > 0) {
       setErrores(erroresDetectados);
-    } else {
-      setErrores({});
+      setStatus("");
+      return;
+    }
 
-      emailjs
-        .send(
-          "service_dv56c9i",
-          "template_8vvhd3a",
-          formData,
-          "MNej6Ak4dh4xJjYw2",
-        )
-        .then(() => {
-          alert("¡Mensaje enviado exitosamente a tu correo!");
-          setFormData({ nombre: "", email: "", mensaje: "" });
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Hubo un error al procesar el envío de tu mensaje.");
-        });
+    setErrores({});
+    setIsSubmitting(true);
+    setStatus("");
+
+    try {
+      await emailjs.send(
+        "service_dv56c9i",
+        "template_8vvhd3a",
+        formData,
+        "MNej6Ak4dh4xJjYw2",
+      );
+      setStatus("¡Mensaje enviado correctamente!");
+      setFormData({ nombre: "", email: "", mensaje: "" });
+    } catch (error) {
+      console.error("No se pudo enviar el mensaje:", error);
+      setStatus("No se pudo enviar el mensaje. Inténtalo de nuevo más tarde.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <form
-      // Se pasa una función como manejador, no un string!![cite: 5].
       onSubmit={handleSubmit}
-      className="w-full max-w-md bg-zinc-800 p-8 rounded-xl shadow-lg"
+      noValidate
+      aria-busy={isSubmitting}
+      className="w-full max-w-md rounded-md border border-zinc-800 bg-zinc-900/80 p-6 shadow-2xl shadow-black/20 sm:p-8"
     >
       <div className="mb-4">
-        <label className="block text-zinc-300 font-medium mb-2">
+        <label
+          htmlFor="nombre"
+          className="mb-2 block text-sm font-medium text-zinc-200"
+        >
           Nombre y Apellido
         </label>
         <input
+          id="nombre"
           type="text"
           name="nombre"
           value={formData.nombre}
-          // Usamos onChange para rastrear cambios en inputs, textarea[cite: 5].
           onChange={handleChange}
-          className={`w-full p-3 rounded bg-zinc-900 text-zinc-100 border focus:outline-none focus:ring-2 ${errores.nombre ? "border-red-500 focus:ring-red-500" : "border-zinc-700 focus:ring-purple-500"}`}
+          autoComplete="name"
+          required
+          aria-invalid={Boolean(errores.nombre)}
+          aria-describedby={errores.nombre ? "nombre-error" : undefined}
+          className={`w-full rounded-md border bg-zinc-950 px-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-2 ${errores.nombre ? "border-red-500 focus:ring-red-500" : "border-zinc-700 focus:border-purple-400 focus:ring-purple-400/30"}`}
           placeholder="Ej: Juan Pérez"
         />
         {errores.nombre && (
-          <p className="text-red-500 text-sm mt-1">{errores.nombre}</p>
+          <p id="nombre-error" className="text-red-500 text-sm mt-1">
+            {errores.nombre}
+          </p>
         )}
       </div>
 
       <div className="mb-4">
-        <label className="block text-zinc-300 font-medium mb-2">
+        <label
+          htmlFor="email"
+          className="mb-2 block text-sm font-medium text-zinc-200"
+        >
           Correo Electrónico
         </label>
         <input
+          id="email"
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
-          className={`w-full p-3 rounded bg-zinc-900 text-zinc-100 border focus:outline-none focus:ring-2 ${errores.email ? "border-red-500 focus:ring-red-500" : "border-zinc-700 focus:ring-purple-500"}`}
+          autoComplete="email"
+          required
+          aria-invalid={Boolean(errores.email)}
+          aria-describedby={errores.email ? "email-error" : undefined}
+          className={`w-full rounded-md border bg-zinc-950 px-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-2 ${errores.email ? "border-red-500 focus:ring-red-500" : "border-zinc-700 focus:border-purple-400 focus:ring-purple-400/30"}`}
           placeholder="ejemplo@correo.com"
         />
         {errores.email && (
-          <p className="text-red-500 text-sm mt-1">{errores.email}</p>
+          <p id="email-error" className="text-red-500 text-sm mt-1">
+            {errores.email}
+          </p>
         )}
       </div>
 
       <div className="mb-6">
-        <label className="block text-zinc-300 font-medium mb-2">
+        <label
+          htmlFor="mensaje"
+          className="mb-2 block text-sm font-medium text-zinc-200"
+        >
           Mensaje{" "}
-          <span className="text-sm font-normal text-zinc-500">
+          <span
+            id="mensaje-contador"
+            className="text-xs font-normal text-zinc-500"
+          >
             ({formData.mensaje.length}/300)
           </span>
         </label>
         <textarea
+          id="mensaje"
           name="mensaje"
           value={formData.mensaje}
           onChange={handleChange}
           rows="4"
-          className={`w-full p-3 rounded bg-zinc-900 text-zinc-100 border focus:outline-none focus:ring-2 resize-none ${errores.mensaje ? "border-red-500 focus:ring-red-500" : "border-zinc-700 focus:ring-purple-500"}`}
+          maxLength={300}
+          required
+          aria-invalid={Boolean(errores.mensaje)}
+          aria-describedby={
+            errores.mensaje
+              ? "mensaje-error mensaje-contador"
+              : "mensaje-contador"
+          }
+          className={`w-full resize-y rounded-md border bg-zinc-950 px-3 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:ring-2 ${errores.mensaje ? "border-red-500 focus:ring-red-500" : "border-zinc-700 focus:border-purple-400 focus:ring-purple-400/30"}`}
           placeholder="Escribe tu mensaje aquí..."
-        ></textarea>
+        />
         {errores.mensaje && (
-          <p className="text-red-500 text-sm mt-1">{errores.mensaje}</p>
+          <p id="mensaje-error" className="text-red-500 text-sm mt-1">
+            {errores.mensaje}
+          </p>
         )}
       </div>
 
       <button
         type="submit"
-        className="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-4 rounded transition-colors"
+        disabled={isSubmitting}
+        className="min-h-12 w-full rounded-md bg-purple-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-purple-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-300 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {buttonText}
+        {isSubmitting ? "Enviando..." : buttonText}
       </button>
+      <p
+        className="mt-3 min-h-5 text-sm leading-6 text-zinc-400"
+        role="status"
+        aria-live="polite"
+      >
+        {status}
+      </p>
     </form>
   );
 };
