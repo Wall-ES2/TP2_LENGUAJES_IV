@@ -139,7 +139,14 @@
   to { transform: translateX(380%) skewX(-20deg); }
 }
 
+@keyframes aero-background-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-30deg); opacity: 0.65; }
+  50% { transform: translate3d(-4vw, 4vh, 0) rotate(-18deg); opacity: 1; }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  body::before { animation: aero-background-drift 24s ease-in-out infinite; }
+  body::after { animation: aero-background-drift 30s -15s ease-in-out infinite reverse; }
   @layer components {
     .page-surface { animation: aero-enter 420ms ease-out; }
     .page-surface .glass-panel { animation: aero-enter 520ms ease-out backwards; }
