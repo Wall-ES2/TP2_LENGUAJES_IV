@@ -307,7 +307,7 @@ function ConsultaPerfil() {
 
 export default function Repositorios() {
   return (
-    <div className="mx-auto mt-10 max-w-6xl">
+    <div className="mx-auto mt-6 max-w-5xl">
       <nav
         aria-label="Herramientas de desarrollo"
         className="mb-8 flex flex-wrap gap-5 text-sm text-slate-700"

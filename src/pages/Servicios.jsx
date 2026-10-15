@@ -34,17 +34,17 @@ const servicios = [
 
 const Servicios = () => {
   return (
-    <main className="min-h-screen page-surface px-4 py-16 text-slate-900 sm:px-6 md:py-24">
+    <main className="min-h-[calc(100vh-4rem)] page-surface px-4 py-6 text-slate-900 sm:px-6 md:py-8">
       <div className="mx-auto max-w-5xl">
-        <header className="mb-12 max-w-2xl">
-          <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase text-slate-700 sm:text-sm">
+        <header className="mb-6 max-w-2xl">
+          <p className="mb-2 flex items-center gap-3 text-xs font-semibold uppercase text-slate-700">
             <span className="h-px w-8 bg-slate-400" aria-hidden="true" />
             Qué puedo hacer
           </p>
-          <h1 className="text-5xl font-semibold text-slate-700 md:text-6xl">
+          <h1 className="text-3xl font-semibold leading-tight text-slate-900 sm:text-4xl">
             Mis servicios
           </h1>
-          <p className="mt-5 text-base leading-8 text-slate-600 md:text-lg">
+          <p className="mt-2 text-sm leading-6 text-slate-600 sm:text-base">
             Desarrollo de aplicaciones web y bases de datos, con foco en la
             necesidad detrás de cada proyecto.
           </p>
@@ -53,7 +53,7 @@ const Servicios = () => {
           {servicios.map((servicio) => (
             <article
               key={servicio.numero}
-              className="group grid gap-4 py-7 transition-colors hover:bg-white/50 sm:grid-cols-[3rem_5rem_1fr] sm:gap-6 sm:px-4 rounded-2xl "
+              className="group grid gap-4 px-4 py-5 transition-colors hover:bg-white/50 sm:grid-cols-[3rem_5rem_1fr] sm:gap-6 sm:px-4 rounded-2xl "
             >
               <span className="font-mono text-xs text-slate-700">
                 {servicio.numero}
