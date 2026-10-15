@@ -1,0 +1,12 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6a869c"/><stop offset=".3" stop-color="#eff8ff"/><stop offset=".55" stop-color="#c2d5e3"/><stop offset="1" stop-color="#5d7990"/></linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop stop-color="white"/><stop offset="1" stop-color="#a5bfD2"/></linearGradient>
+  </defs>
+  <path d="M15 20v39c0 15 50 15 50 0V20" fill="url(#metal)" stroke="#536f84" stroke-width="1.5"/>
+  <path d="M16 34c0 14 48 14 48 0M16 48c0 14 48 14 48 0" stroke="#506d85" stroke-width="2"/>
+  <path d="M16 36c0 14 48 14 48 0M16 50c0 14 48 14 48 0" stroke="#ffffffc9"/>
+  <ellipse cx="40" cy="20" rx="25" ry="10" fill="url(#top)" stroke="#536f84" stroke-width="1.5"/>
+  <ellipse cx="40" cy="18" rx="19" ry="5" fill="white" opacity=".5"/>
+  <path d="M24 29v29" stroke="white" stroke-width="3" opacity=".45"/>
+</svg>

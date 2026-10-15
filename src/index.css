@@ -1,1 +1,133 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
+
+@layer base {
+  :root {
+    font-family: "Segoe UI", "Tahoma", sans-serif;
+    color: #233544;
+    background: #d8e3ed;
+    color-scheme: light;
+  }
+  body {
+    margin: 0;
+    min-width: 320px;
+    isolation: isolate;
+    background:
+      radial-gradient(ellipse at 12% 12%, #ffffffed, transparent 45%),
+      radial-gradient(ellipse at 92% 35%, #b3caddaa, transparent 50%),
+      linear-gradient(140deg, #c5d4e2 0%, #edf3f8 40%, #bdcfde 75%, #e3ebf1 100%);
+    background-attachment: fixed;
+  }
+  body::before, body::after {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    pointer-events: none;
+    border: 1px solid #ffffffa6;
+    background: linear-gradient(130deg, #ffffff05 20%, #ffffff80 45%, #ffffff05 55%);
+    box-shadow: inset 0 1px 0 white, 0 0 50px #ffffff66;
+    border-radius: 50%;
+    transform: rotate(-30deg);
+  }
+  body::before { width: 70vw; height: 60vh; top: -15%; right: -15%; }
+  body::after { width: 60vw; height: 50vh; bottom: -20%; left: -20%; }
+  h1, h2, h3 { letter-spacing: -0.03em; text-shadow: 0 1px 0 #ffffffcc; }
+  a, button, input, textarea { -webkit-tap-highlight-color: transparent; transition: background-color 180ms, box-shadow 180ms, color 180ms; }
+  button { cursor: pointer; }
+  button:disabled { cursor: wait; }
+  :focus-visible { outline: 3px solid #496b87; outline-offset: 4px; }
+  ::selection { background: #b4cfe3; color: #172b3a; }
+  section[id] { scroll-margin-top: 6rem; }
+}
+
+@layer components {
+  .page-surface { background: transparent; }
+  .glass-nav {
+    border-bottom: 1px solid #ffffffd9;
+    background: linear-gradient(180deg, #ffffffd9, #e4edf4a6 48%, #aebfce99 50%, #e5edf4bf);
+    box-shadow: 0 1px 0 #778da055, 0 5px 22px #324b6226;
+    -webkit-backdrop-filter: blur(22px) saturate(120%);
+    backdrop-filter: blur(22px) saturate(120%);
+  }
+  .aero-nav-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 78px;
+    min-height: 38px;
+    padding: 8px 14px;
+    border: 1px solid #8da3b7;
+    border-radius: 9px;
+    background: linear-gradient(180deg, #ffffffdc, #eef4f9b3 48%, #bacbd999 50%, #e4edf4cc);
+    color: #263e52;
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 0 1px 0 white;
+    box-shadow: inset 0 1px 0 white, 0 2px 4px #324b621a;
+  }
+  .aero-nav-link:hover {
+    background: linear-gradient(180deg, white, #edf8ff 48%, #c1d7e7 50%, #eaf5fc);
+    border-color: #647f95;
+    color: #142e42;
+  }
+  .aero-nav-link[aria-current="page"] {
+    color: white;
+    text-shadow: 0 1px 2px #1b3049;
+    border-color: #405e78;
+    background: linear-gradient(180deg, #99afc2, #718ca5 48%, #405e78 50%, #6f8da5);
+    box-shadow: inset 0 1px 0 #e1edf7, 0 0 0 2px #ffffff80, 0 3px 8px #253f5a40;
+  }
+  .glass-panel {
+    position: relative;
+    border: 1px solid #fffffff2;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #ffffffde, #f4f8fbbf 48%, #dce6eead);
+    box-shadow: inset 0 2px 0 white, inset 0 -1px 0 #9aafbf55, 0 0 0 1px #8299ad66, 0 12px 30px #30496026;
+    -webkit-backdrop-filter: blur(22px) saturate(110%);
+    backdrop-filter: blur(22px) saturate(110%);
+  }
+  .glass-button {
+    border: 1px solid #526f87;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #aabfce, #7d9ab1 46%, #496b86 50%, #6f91aa 90%, #9eb7ca);
+    color: white;
+    text-shadow: 0 1px 2px #233e54;
+    box-shadow: inset 0 1px 0 #ffffffd9, inset 0 0 0 1px #ffffff40, 0 4px 10px #314d6633;
+  }
+  .glass-button:hover { background: linear-gradient(180deg, #c5d9e6, #92b0c6 46%, #577c99 50%, #8cacc2); }
+  .glass-button:active { box-shadow: inset 0 2px 5px #263f5566; }
+  .aero-service-icon {
+    width: 80px;
+    height: 80px;
+    padding: 6px;
+    border: 1px solid #ffffffed;
+    border-radius: 18px;
+    background: linear-gradient(155deg, #ffffffed, #dce8f2a6 48%, #adc2d580 50%, #edf5fbd9);
+    box-shadow: inset 0 1px 0 white, 0 0 0 1px #92aabc80, 0 5px 12px #354f6726;
+  }
+  .aero-service-icon img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 1px #334f6926);
+  }
+  input, textarea {
+    border-radius: 9px;
+    background: linear-gradient(180deg, #eaf0f5, #ffffffeb 25%);
+    box-shadow: inset 0 2px 4px #3758731a, 0 1px 0 white;
+  }
+  thead { background: linear-gradient(180deg, #ffffffd9, #d5e1ebbf); }
+  th { border-bottom: 1px solid #a5b7c5; }
+  tbody tr:nth-child(even) { background: #dce6ef55; }
+  tbody tr:hover { background: #ffffff99; }
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass-panel, .glass-nav { background: #eef3f7; }
+  }
+}
+
+@media (max-width: 400px) {
+  .aero-nav-link { min-width: 70px; padding-inline: 10px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
